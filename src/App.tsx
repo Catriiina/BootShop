@@ -46,7 +46,7 @@ function App() {
                         <Route path={PATH.PAGE3} element={<Abibas/>}/>
                         <Route path="/" element={<Navigate to={PATH.PAGE1}/>}/>
                         <Route path={PATH.ERROR} element={<Error404/>}/>
-                        <Route path={'/adidas/:id'} element={<Model/>}/>
+                        <Route path="/:model/:id" element={<Model/>} />
                         <Route path="/*" element={<Navigate to={"/error404"}/>}/>
                     </Routes>
                 </div>

@@ -1,19 +1,36 @@
 import React from "react";
-import {adidasArr} from "./pages/Adidas";
-import {Link, useParams} from "react-router-dom";
+import {adidasArr, AdidasItem} from "./pages/Adidas";
+import { useParams } from "react-router-dom";
+import {pumaArr, PumaItem} from "./pages/Puma";
+
+type CrossModels={
+    [key:string]: (AdidasItem[] | PumaItem[] );
+}
+
+const crossModels: CrossModels = {
+    adidas:adidasArr,
+    puma:pumaArr,
+}
 
 export const Model = () => {
-    const params = useParams()
-    console.log(params.id)
+    const {  model, id } = useParams();
+
+    const currentModel = model
+     ? crossModels[model].find(el => el.id === Number(id))
+     : null
+
+    if (!currentModel) {
+        return <div style={{textAlign: 'center'}}><h2>Такой модели не существует</h2></div>;
+    }
+
     return (
         <div style={{textAlign: 'center'}}>
-            <h2>{adidasArr[Number(params.id)].model}</h2>
-            <h4>{adidasArr[Number(params.id)].collection}</h4>
-            <h3>{adidasArr[Number(params.id)].price}</h3>
-
-            <img src={adidasArr[Number(params.id)].picture}
-                 alt={adidasArr[Number(params.id)].model}
+            <h2>{currentModel.model}</h2>
+            <h4>{currentModel.collection}</h4>
+            <h3>{currentModel.price}</h3>
+            <img src={currentModel.picture}
+                 alt={currentModel.model}
                  style={{width: '600px', height: 'auto', marginRight: '10px'}}/>
         </div>
-    )
-}
+    );
+};
